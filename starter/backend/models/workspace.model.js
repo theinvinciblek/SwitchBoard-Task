@@ -1,0 +1,25 @@
+import mongoose from "mongoose";
+
+const workspaceSchema = new mongoose.Schema(
+  {
+    workspaceId: {
+      type: String,
+      required: true,
+      unique: true,
+      trim: true,
+    },
+
+    name: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+  },
+  {
+    timestamps: true,
+  }
+);
+
+const Workspace = mongoose.model("Workspace", workspaceSchema);
+
+export default Workspace;

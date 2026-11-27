@@ -1,0 +1,8 @@
+node_modules/
+dist/
+.env
+.check-logs/
+dump.rdb
+.env.*
+!.env.example
+coverage/
