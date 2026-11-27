@@ -1,9 +1,9 @@
 import Workspace from "../models/workspace.model.js";
-import { badRequest, notFound } from "../utils/httpError.js";
+import { badRequest, notFound, HttpError } from "../utils/httpError.js";
 
 // Resolves ?workspace=<id> into req.workspaceId. Every workspace-scoped route goes
 // through this, and controllers must use req.workspaceId in every query filter.
-// Once login exists, this is also where membership is checked (401 / 403).
+// Runs after requireSession: a signed-in user who is not a member gets 403.
 export const requireWorkspace = async (req, res, next) => {
   const { workspace } = req.query;
 
@@ -11,9 +11,17 @@ export const requireWorkspace = async (req, res, next) => {
     throw badRequest("workspace query parameter is required");
   }
 
-  const exists = await Workspace.exists({ workspaceId: workspace.trim() });
+  const workspaceId = workspace.trim();
+
+  // Membership comes from the IdP's workspaces claim, stored in the session.
+  // Checked before existence, so a non-member learns nothing about the workspace.
+  const membership = req.user?.workspaces?.find((w) => w.id === workspaceId);
+  if (!membership) throw new HttpError(403, "Not a member of this workspace");
+
+  const exists = await Workspace.exists({ workspaceId });
   if (!exists) throw notFound("Workspace not found");
 
-  req.workspaceId = workspace.trim();
+  req.workspaceId = workspaceId;
+  req.workspaceRole = membership.role;
   next();
 };

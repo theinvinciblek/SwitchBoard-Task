@@ -1,5 +1,5 @@
 {
-  "install": "npm run scaffold:install",
-  "start": "npm --prefix scaffold/server start",
+  "install": "npm --prefix backend install",
+  "start": "npm --prefix backend start",
   "health": "/healthz"
 }
