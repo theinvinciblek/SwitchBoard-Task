@@ -152,6 +152,34 @@ or six winners per conversation), while the atomic version passes.
 - **`/__grader/snapshot`** lists inbound ids per contact in `occurred_at` order,
   and outbound `client_ref` to status, per workspace.
 
+## Frontend
+
+- **One origin in development.** Vite proxies `/api`, `/auth` and `/ws` to the
+  backend, so the `HttpOnly` session cookie is sent with every request and no
+  CORS is needed. The WebSocket's browser `Origin` is `WEB_ORIGIN`, which the
+  server accepts.
+- **Only real endpoints.** The UI uses exactly the routes in `backend/routes`.
+  There is no release endpoint, so there is no Release action, and a
+  conversation held by someone else shows its holder instead of an Assign
+  button.
+- **Search and the inbox views filter what is loaded** (up to 100 conversations
+  per page, with "Load older conversations"). The API has no search or filter
+  parameters, so search matches the number and the latest message only.
+- **Unread is per browser.** The API has no read state; the last time each
+  conversation was viewed is kept in `localStorage`, per user and workspace.
+- **Replies are idempotent end to end.** The browser creates the `client_ref`
+  before the first attempt, retries network and `5xx` failures automatically
+  with the same ref, and offers a manual Retry with the same ref, so a reply is
+  never stored twice.
+- **Real time:** the client keeps the last `seq` and reconnects with
+  `after=<seq>` (exponential backoff, and immediately when the browser comes
+  back online). The first connection refetches once, to cover the gap between
+  the first page load and the socket opening. Frames are merged by key, so
+  replays and API responses never duplicate a message, and statuses only move
+  forward.
+- **Replying is disabled while a conversation is closed**, with a Reopen action
+  next to it. The backend would accept the reply; this is a product choice.
+
 ## Known limitations
 
 - **Events can be lost in one crash window.** An event is published after its
