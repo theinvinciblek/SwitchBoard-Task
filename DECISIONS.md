@@ -198,5 +198,9 @@ or six winners per conversation), while the atomic version passes.
   delivered once after a kill and restart; 24 of 24 replies across two copies
   with no request inside a `Retry-After` window; 12 of 12 delivered by the
   surviving copy after the other died for good. The official numbers still need
-  `npm run check:full` in the dev container or on Linux, which also writes
-  `CHECK_REPORT.json`.
+  `npm run check:full` in the dev container or on Linux.
+- **`CHECK_REPORT.json` covers levels 1 and 5 only.** Because of the point
+  above, `npm run check:full` was not run. The committed report was written by
+  the official harness with `node harness/check.js --levels 1,5 --out
+  CHECK_REPORT.json` (profile `quick`): level 1 24/24, level 5 15/15. It
+  records its own profile and levels.

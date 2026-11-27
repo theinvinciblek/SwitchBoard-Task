@@ -1,0 +1,145 @@
+{
+  "profile": "quick",
+  "startedAt": "2026-11-27T14:39:09.724Z",
+  "checks": [
+    {
+      "level": 1,
+      "id": "inbound_complete",
+      "max": 4,
+      "got": 4,
+      "detail": "179 of 179 genuine messages stored"
+    },
+    {
+      "level": 1,
+      "id": "inbound_no_duplicates",
+      "max": 3,
+      "got": 3,
+      "detail": "0 duplicate entries"
+    },
+    {
+      "level": 1,
+      "id": "inbound_order",
+      "max": 3,
+      "got": 3,
+      "detail": "0 out-of-order positions (by occurred_at)"
+    },
+    {
+      "level": 1,
+      "id": "isolation",
+      "max": 2,
+      "got": 2,
+      "detail": "0 messages under the wrong workspace or contact, or forged/replayed ids stored"
+    },
+    {
+      "level": 1,
+      "id": "rejects_forged",
+      "max": 2,
+      "got": 2,
+      "detail": "0 of 6 forged webhooks accepted"
+    },
+    {
+      "level": 1,
+      "id": "rejects_stale",
+      "max": 1,
+      "got": 1,
+      "detail": "0 of 3 replayed webhooks accepted"
+    },
+    {
+      "level": 1,
+      "id": "ack_speed",
+      "max": 1,
+      "got": 1,
+      "detail": "p95 acknowledgement 51 ms, 0 first attempts not acknowledged"
+    },
+    {
+      "level": 1,
+      "id": "outbound_exactly_once",
+      "max": 2,
+      "got": 2,
+      "detail": "12 of 12 replies reached the carrier, 0 more than once, 0 requests without Idempotency-Key"
+    },
+    {
+      "level": 1,
+      "id": "honours_retry_after",
+      "max": 1,
+      "got": 1,
+      "detail": "0 requests sent inside a Retry-After window"
+    },
+    {
+      "level": 1,
+      "id": "status_lifecycle",
+      "max": 1,
+      "got": 1,
+      "detail": "12 of 12 final statuses match the carrier"
+    },
+    {
+      "level": 1,
+      "id": "claim_atomic",
+      "max": 2,
+      "got": 2,
+      "detail": "5 of 5 conversations had exactly one winner out of six, 0 had several, 0 had none; snapshot assignee correct for 5"
+    },
+    {
+      "level": 1,
+      "id": "outage_recovery",
+      "max": 2,
+      "got": 2,
+      "detail": "6 of 6 replies requested during a 8 s provider outage were delivered afterwards, 0 more than once; 29 requests made during the outage"
+    },
+    {
+      "level": 5,
+      "id": "login",
+      "max": 3,
+      "got": 3,
+      "detail": "signed in as u_ben through the IdP; GET /api/me is correct"
+    },
+    {
+      "level": 5,
+      "id": "me_needs_session",
+      "max": 1,
+      "got": 1,
+      "detail": "GET /api/me without a session: 401 (want 401)"
+    },
+    {
+      "level": 5,
+      "id": "api_tenant_isolation",
+      "max": 3,
+      "got": 3,
+      "detail": "GET /api/conversations as u_ben: own workspace 200 (want 200), another workspace 403 (want 403), no session 401 (want 401)"
+    },
+    {
+      "level": 5,
+      "id": "socket_refuses_strangers",
+      "max": 2,
+      "got": 2,
+      "detail": "WebSocket /ws without a session: refused; as u_ben for ws_globex: refused"
+    },
+    {
+      "level": 5,
+      "id": "socket_live",
+      "max": 3,
+      "got": 3,
+      "detail": "6 of 6 new messages arrived on the socket within 5 s; 0 frames from another workspace; seq increasing"
+    },
+    {
+      "level": 5,
+      "id": "socket_replay",
+      "max": 3,
+      "got": 3,
+      "detail": "4 of 4 messages that arrived while disconnected were replayed after reconnecting with after=349; 0 frames at or before that seq were sent again"
+    }
+  ],
+  "score": 39,
+  "max": 39,
+  "levels": {
+    "1": {
+      "got": 24,
+      "max": 24
+    },
+    "5": {
+      "got": 15,
+      "max": 15
+    }
+  },
+  "finishedAt": "2026-11-27T14:40:41.643Z"
+}
